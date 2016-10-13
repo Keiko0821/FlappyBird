@@ -231,10 +231,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func setupItem() {
         // アイテムの画像を読み込む
         let itemTexture = SKTexture(imageNamed:"apple")
-        itemTexture.filteringMode = .Linear
+        itemTexture.filteringMode = SKTextureFilteringMode.Linear
         
         // 移動する距離を計算
-        let movingDistance = CGFloat(self.frame.size.width + itemTexture.size().width)
+        let movingDistance = CGFloat(self.frame.size.width + itemTexture.size().width * 4)
         
         // 画面外まで移動するアクションを作成
         let moveItem = SKAction.moveByX(-movingDistance, y: 0, duration:4.0)
@@ -249,23 +249,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let createItemAnimation = SKAction.runBlock({
             // アイテム関連のノードを乗せるノードを作成
             let item = SKNode()
-            item.position = CGPoint(x: self.frame.size.width + itemTexture.size().width / 2, y: 0.0)
-            item.zPosition = -20.0 // 雲より手前、地面より奥
+            item.position = CGPoint(x: self.frame.size.width + itemTexture.size().width * 2, y: 0.0)
+            item.zPosition = -25.0 // [奥]雲,アイテム,壁,地面[手前]
+            
+            // 画面のY軸の中央値
+            let center_y = self.frame.size.height / 2
+            // アイテムのY座標を上下ランダムにさせるときの最大値
+            let random_y_range = self.frame.size.height / 3
+            // アイテムのY軸の下限
+            let item_lowest_y = UInt32( center_y - itemTexture.size().height / 2 -  random_y_range / 2)
+            // 1〜random_y_rangeまでのランダムな整数を生成
+            let random_y = arc4random_uniform( UInt32(random_y_range) )
+            // Y軸の下限にランダムな値を足して、アイテムのY座標を決定
+            let item_y = CGFloat(item_lowest_y + random_y)
             
             // アイテムを作成
-            let itemView = SKSpriteNode(texture: itemTexture)
-            itemView.position = CGPoint(x:0.0, y:273)
-            item.addChild(itemView)
+            let itemApple = SKSpriteNode(texture: itemTexture)
+            itemApple.position = CGPoint(x:0.0, y:item_y)
+            
+            itemApple.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: itemApple.size.width, height: itemApple.size.height))
+            
+            itemApple.physicsBody?.dynamic = false
+            //自身のカテゴリーを設定
+            itemApple.physicsBody?.categoryBitMask = self.itemCategory
+            //衝突することを判定する相手のカテゴリー
+            itemApple.physicsBody?.contactTestBitMask = self.birdCategory
+            
             
             // アイテムスコアアップ用のノード
             let itemScoreNode = SKNode()
             itemScoreNode.position = CGPoint(x: 0.0 , y:273)
-            itemScoreNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: itemView.size.width, height: self.frame.size.height))
+            itemScoreNode.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: itemApple.size.width, height: self.frame.size.height))
             itemScoreNode.physicsBody?.dynamic = false
             itemScoreNode.physicsBody?.categoryBitMask = self.itemCategory
             itemScoreNode.physicsBody?.contactTestBitMask = self.birdCategory
             
-            item.addChild(itemScoreNode)
+            item.addChild(itemApple)
 
             item.runAction(itemAnimation)
             
@@ -311,6 +330,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bestScore = userDefaults.integerForKey("BEST")
         bestScoreLabelNode.text = "Best Score:\(bestScore)"
         self.addChild(bestScoreLabelNode)
+        
+        print(scoreLabelNode.text)
+        print(itemScoreLabelNode.text)
+        
     }
     
     func setupBird() {
@@ -352,7 +375,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         print(score)
         print(itemScore)
         scoreLabelNode.text = String("Score:\(score)")
-        scoreLabelNode.text = String("Item Score:\(itemScore)")
+        itemScoreLabelNode.text = String("Item Score:\(itemScore)")
         
         bird.position = CGPoint(x: self.frame.size.width * 0.2, y:self.frame.size.height * 0.7)
         bird.physicsBody?.velocity = CGVector.zero
@@ -377,6 +400,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             restart()
         }
     }
+    
     
     // SKPhysicsContactDelegateのメソッド。衝突したときに呼ばれる
     func didBeginContact(contact: SKPhysicsContact) {
