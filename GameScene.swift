@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AudioToolbox
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -33,6 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // ベストスコア保存用
     let userDefaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
     
+
     
     // SKView上にシーンが表示されたときに呼ばれるメソッド
     override func didMoveToView(view: SKView) {
@@ -388,6 +390,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scrollNode.speed = 1
     }
     
+    func playSound() {
+        var soundID: SystemSoundID = 0
+        let soundURL: NSURL = NSBundle.mainBundle().URLForResource("decision22", withExtension:"mp3")!
+        AudioServicesCreateSystemSoundID(soundURL, &soundID)
+        AudioServicesPlaySystemSound(soundID)
+
+    }
+    
     // 画面をタップした時に呼ばれる
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if scrollNode.speed > 0 {
@@ -426,6 +436,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         } else if (contact.bodyA.categoryBitMask & itemCategory) == itemCategory || (contact.bodyB.categoryBitMask & itemCategory) == itemCategory {
             // アイテムスコア用の物体と衝突した
+            playSound()
             print("itemScoreUp")
             itemScore += 1
             contact.bodyA.node!.removeFromParent()

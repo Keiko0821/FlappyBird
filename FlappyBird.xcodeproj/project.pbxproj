@@ -16,6 +16,8 @@
 		E909CB121DACCC3C00180A8E /* FlappyBirdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E909CB111DACCC3C00180A8E /* FlappyBirdTests.swift */; };
 		E909CB1D1DACCC3C00180A8E /* FlappyBirdUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E909CB1C1DACCC3C00180A8E /* FlappyBirdUITests.swift */; };
 		E909CB2B1DACCCA700180A8E /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E909CB2A1DACCCA700180A8E /* SpriteKit.framework */; };
+		E95B9EEF1DB04881007B2377 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E95B9EEE1DB04881007B2377 /* AudioToolbox.framework */; };
+		E95B9EF11DB04B65007B2377 /* decision22.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E95B9EF01DB04B65007B2377 /* decision22.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,8 @@
 		E909CB1C1DACCC3C00180A8E /* FlappyBirdUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlappyBirdUITests.swift; sourceTree = "<group>"; };
 		E909CB1E1DACCC3C00180A8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E909CB2A1DACCCA700180A8E /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		E95B9EEE1DB04881007B2377 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		E95B9EF01DB04B65007B2377 /* decision22.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = decision22.mp3; path = ../../../../../Downloads/decision22.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E95B9EEF1DB04881007B2377 /* AudioToolbox.framework in Frameworks */,
 				E909CB2B1DACCCA700180A8E /* SpriteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,6 +87,7 @@
 		E909CAF01DACCC3C00180A8E = {
 			isa = PBXGroup;
 			children = (
+				E95B9EEE1DB04881007B2377 /* AudioToolbox.framework */,
 				E9066A4D1DAD1C96005849D1 /* GameScene.swift */,
 				E909CB2A1DACCCA700180A8E /* SpriteKit.framework */,
 				E909CAFB1DACCC3C00180A8E /* FlappyBird */,
@@ -108,6 +114,7 @@
 				E909CAFE1DACCC3C00180A8E /* ViewController.swift */,
 				E909CB001DACCC3C00180A8E /* Main.storyboard */,
 				E909CB031DACCC3C00180A8E /* Assets.xcassets */,
+				E95B9EF01DB04B65007B2377 /* decision22.mp3 */,
 				E909CB051DACCC3C00180A8E /* LaunchScreen.storyboard */,
 				E909CB081DACCC3C00180A8E /* Info.plist */,
 			);
@@ -238,6 +245,7 @@
 			files = (
 				E909CB071DACCC3C00180A8E /* LaunchScreen.storyboard in Resources */,
 				E909CB041DACCC3C00180A8E /* Assets.xcassets in Resources */,
+				E95B9EF11DB04B65007B2377 /* decision22.mp3 in Resources */,
 				E909CB021DACCC3C00180A8E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
